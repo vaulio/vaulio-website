@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume</title>
+  <meta name="description" content="Resume Valentin Aubois-Liogier">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <a class="project__back" href="index.html">← BACK</a>
+
+  <article class="project">
+    <div class="project__layout">
+
+      <div class="project__text">
+        <h1 class="project__title">Rencontres</h1>
+        <p class="project__meta">Since 2019 - Ongoing poetry project</p>
+        <p>texte du projet
+        </p>
+      </div>
+      <div class="scatter">
+        <!-- Chaque figure : remplacer src par l'image réelle.
+             data-ratio = hauteur / largeur de l'image, utilisé par
+             script.js pour éviter les chevauchements avant même
+             que l'image ne soit chargée. -->
+        <figure data-ratio="1.3">
+          <img src="images/resume/portrait.jpg" alt="Portrait Valentin Aubois-Liogier" loading="lazy" class="zoomable">        
+        </figure>
+      </div>
+
+      <!-- Overlay for the zoomed view -->
+<div class="overlay" id="overlay">
+  <img src="" alt="" id="overlay-img">
+  <span class="close-btn">&times;</span>
+</div>
+
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <nav class="site-footer__nav">
+      <a href="mailto:vauboisliogier@proton.me">vauboisliogier@proton.me</a>
+      <a href="https://instagram.com/v.aulio">@v.aulio</a>
+    </nav>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

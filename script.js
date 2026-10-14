@@ -78,29 +78,80 @@
     init();
   }
 
-const overlay = document.getElementById('overlay');
-const overlayImg = document.getElementById('overlay-img');
-const zoomableImages = document.querySelectorAll('.zoomable');
+  /* ---------------- Visionneuse plein écran ---------------- */
+  var overlay = document.getElementById("overlay");
+  var overlayImg = document.getElementById("overlay-img");
 
-zoomableImages.forEach(img => {
-  img.addEventListener('click', () => {
-    overlayImg.src = img.src;
-    overlayImg.alt = img.alt;
-    overlay.classList.add('active');
-  });
-});
+  if (overlay && overlayImg) {
+    document.querySelectorAll(".zoomable").forEach(function (img) {
+      img.addEventListener("click", function () {
+        overlayImg.src = img.dataset.full || img.src; // data-full = version HD optionnelle
+        overlayImg.alt = img.alt;
+        overlay.classList.add("active");
+        overlay.setAttribute("aria-hidden", "false");
+      });
+    });
 
-// Click anywhere on overlay to close
-overlay.addEventListener('click', () => {
-  overlay.classList.remove('active');
-});
-
-// Optional: close with Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    overlay.classList.remove('active');
+    var closeOverlay = function () {
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+    };
+    overlay.addEventListener("click", closeOverlay);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeOverlay();
+    });
   }
-});
+
+  /* ---------------- Diaporama ---------------- */
+  function initSlideshow(root) {
+    var track = root.querySelector(".slideshow__track");
+    var n = track ? track.children.length : 0;
+    if (!track || n < 2) return; // une seule image : rien à contrôler
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var index = 0;          // image courante, mémorisée (indépendante de la largeur)
+    var resizing = false;   // évite de recalculer l'index pendant un redimensionnement
+
+    function go(i) {
+      index = (i + n) % n; // boucle : après la dernière, retour à la première
+      track.scrollTo({ left: index * track.clientWidth, behavior: reduceMotion ? "auto" : "smooth" });
+    }
+
+    root.querySelectorAll(".slideshow__btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        go(index + parseInt(btn.dataset.dir, 10));
+      });
+    });
+
+    // flèches du clavier quand la piste a le focus
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(index + 1); }
+      if (e.key === "ArrowLeft")  { e.preventDefault(); go(index - 1); }
+    });
+
+    // suit le glissement tactile / molette pour garder l'index à jour
+    var raf;
+    track.addEventListener("scroll", function () {
+      if (resizing) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        index = Math.round(track.scrollLeft / track.clientWidth);
+      });
+    }, { passive: true });
+
+    // au redimensionnement (ex. passage 1 colonne <-> 2 colonnes) : recale sur l'image courante
+    var rt;
+    window.addEventListener("resize", function () {
+      resizing = true;
+      track.scrollTo({ left: index * track.clientWidth, behavior: "auto" });
+      clearTimeout(rt);
+      rt = setTimeout(function () { resizing = false; }, 150);
+    });
+
+    root.classList.add("is-ready");
+  }
+
+  document.querySelectorAll(".slideshow").forEach(initSlideshow);
 
   // recalcule au redimensionnement, avec un léger différé
   var t;

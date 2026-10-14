@@ -1,0 +1,344 @@
+/* ===================================================================
+   vaulio.fr — feuille de style unique, chargée sur toutes les pages
+   Si police système uniquement = aucun fichier de police à charger.
+   =================================================================== */
+
+:root {
+  --paper: hsl(60, 1%, 14%);
+  --ink: hsl(0, 0%, 95%); /* au lieu de 95% */
+  --mid: hsl(310, 100%, 78%);
+  --line: #d3d2c8;
+  --accent: hsl(0, 0%, 95%);
+  --footer-h: 44px;
+  --pad: clamp(20px, 5vw, 56px);
+  --serif: "Arial", Times, Georgia, serif; /* texte courant */
+  --display: "Interlope", Times, Georgia, serif;   /* titre d'accueil */
+  --link: hsl(310, 100%, 50%); /* à changer si tu veux */
+  font-size: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif); /* tout le site, y compris l'italique */
+  font-synthesis: none;      /* prevents fake bold/italic */
+  line-height: 1.1;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(var(--footer-h) + 12px);
+  min-height: 100vh;
+}
+
+/* Texte courant : Arial */
+
+@font-face {
+  font-family: "Arial";
+  src: url("fonts/ArialNarrow.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial";
+  src: url("fonts/ArialNarrow-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Titre de la page d'accueil : Interlope */
+
+@font-face {
+  font-family: "Interlope";
+  src: url("fonts/Interlope-Regular.woff2") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+a:where([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:where([href]):hover,
+a:where([href]):focus-visible {
+  color: var(--link);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+img { max-width: 100%; display: block; }
+
+
+
+/* ---------------------------------------------------------------
+   Bandeau de bas de page — visible en permanence
+   --------------------------------------------------------------- */
+
+.site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--footer-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--pad);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+  color: var(--mid);
+  z-index: 50;
+}
+
+.site-footer a { color: var(--mid); }
+.site-footer a:hover { color: var(--link); }
+
+
+.site-footer__nav { display: flex; gap: 18px; }
+
+/* ---------------------------------------------------------------
+   Page d'entrée
+   --------------------------------------------------------------- */
+
+.home {
+  max-width: 640px;
+  padding: var(--pad);
+  padding-top: clamp(40px, 12vh, 20px);
+}
+
+.home__identity {
+  margin-bottom: clamp(32px, 8vh, 72px);
+}
+
+.home__name {
+  font-size: clamp(35px, 8vw, 70px); /* avant : clamp(1.7rem, 4.5vw, 2.4rem) ou clamp(2.5rem, 8vw, 5rem) */
+  line-height: 0.6;
+  font-family: var(--display); 
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;   /* avant : 0 0 4px */
+}
+
+.home__role {
+  font-size: 1rem;
+  color: var(--mid);
+  margin: 0 0 20px;
+}
+
+.home__intro {
+  max-width: 46ch;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.project-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.project-list li {
+  border-bottom: 1px solid var(--line);
+}
+
+.project-list a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px;
+  padding: 4px 0;
+  font-size: 1.1rem;
+}
+
+.project-list a:hover .project-list__title,
+.project-list a:focus-visible .project-list__title {
+  color: var(--link);
+}
+
+.project-list__title {
+  transition: color 0.15s ease;
+}
+
+.project-list__year {
+  font-size: 0.85rem;
+  color: var(--mid);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------
+   Page de projet
+   --------------------------------------------------------------- */
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.project__back {
+  display: block;
+  padding: var(--pad) var(--pad) 0;
+  font-size: 0.85rem;
+  color: var(--mid);
+}
+
+.project__back:hover { color: var(--link); }
+
+.project__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: var(--pad);
+}
+
+@media (min-width: 860px) {
+  .project__layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.project__text {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 40ch;
+}
+
+@media (min-width: 860px) {
+  .project__text {
+    width: 30%;
+    position: sticky;
+    top: var(--pad);
+  }
+}
+
+.project__title {
+  font-family: var(--display); 
+  font-size: 2.2rem;
+  line-height: 0.6;
+  font-weight: 400;
+  margin: 0 0 10px;
+}
+
+.project__meta {
+  font-size: 0.85rem;
+  color: var(--mid);
+  margin: 0 0 18px;
+}
+
+.project__text p {
+  margin: 0 0 14px;
+}
+
+.zoomable {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+.zoomable:hover {
+  transform: scale(1.02);
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  animation: zoomIn 0.25s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Zone d'archive : les images y sont positionnées en absolu par script.js */
+.scatter {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 60vh;
+}
+
+.scatter figure {
+  margin: 0;
+  position: absolute;
+  will-change: transform;
+}
+
+.scatter img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.scatter figcaption {
+  font-size: 0.75rem;
+  color: var(--mid);
+  margin-top: 4px;
+}
+
+/* Repli sans JS ou sur petit écran : grille simple, pas de chevauchement possible */
+.scatter.is-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.scatter.is-flow figure {
+  position: static;
+}
+
+@media (max-width: 640px) {
+  .scatter {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+    min-height: 0;
+  }
+  .scatter figure { position: static; }
+}

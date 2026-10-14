@@ -146,6 +146,109 @@ img { max-width: 100%; display: block; }
   margin: 0;
 }
 
+/* ---------------------------------------------------------------
+   Diaporama (page d'entrée) — scroll-snap natif : le glissement
+   tactile fonctionne sans JS, le script ajoute boutons/clavier.
+   --------------------------------------------------------------- */
+
+.slideshow {
+  margin: 0 0 clamp(32px, 8vh, 72px);
+}
+
+.slideshow__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;            /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.slideshow__track::-webkit-scrollbar { display: none; }
+
+.slideshow__slide {
+  flex: 0 0 100%;
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.slideshow__slide img {
+  width: 100%;
+  height: auto;                     /* hauteur réelle de l'image : la légende la suit de près */
+  max-height: 60vh;
+  object-fit: contain;
+  object-position: left top;        /* aligné avec la colonne de texte */
+}
+
+/* pas d'agrandissement au survol à l'intérieur du diaporama */
+.slideshow .zoomable:hover { transform: none; }
+
+.slideshow__slide figcaption {
+  font-size: 0.85rem;
+  color: var(--mid);
+  margin-top: 6px;
+}
+
+.slideshow__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ← à gauche, → à droite, sur toute la largeur */
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--mid);
+}
+
+.slideshow__btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  font: inherit;
+  font-size: 1.1rem;
+  color: var(--mid);
+  cursor: pointer;
+}
+
+.slideshow__btn:hover { color: var(--link); }
+
+.slideshow__track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slideshow__track { scroll-behavior: auto; }
+}
+
+/* Grand écran : texte à gauche, diaporama à droite (fixe pendant le défilement).
+   En dessous de 1100px : une seule colonne (smartphone, tablette, petite fenêtre). */
+@media (min-width: 1100px) {
+  .home {
+    max-width: 1400px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); /* colonnes proportionnelles */
+    column-gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+  }
+
+  .home > * { grid-column: 1; }
+
+  .home > .slideshow {
+    grid-column: 2;
+    grid-row: 1 / span 4;   /* occupe la hauteur des 4 autres blocs */
+    position: sticky;
+    top: var(--pad);
+    margin: 0;
+  }
+
+  .slideshow__slide img { max-height: 75vh; }
+}
+
+/* Sans JS : les boutons ne servent à rien, on les masque */
+.slideshow:not(.is-ready) .slideshow__controls { display: none; }
+
 .project-list {
   list-style: none;
   margin: 0;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>vaulio.fr</title>
+  <title>V. Aubois-Liogier</title>
   <meta name="description" content="Parcours, pratique et travaux.">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -19,9 +19,9 @@
         Coming from a design background (holding several master's degrees in Design), 
         Val·entin navigate across disiplines and media: performing, designing, writing short texts and poetry, 
         dancing and creating installations. Their work explores socioecological and sociosensory transformations 
-        of inhabited spaces, engagin with the banal, liminal and abject. Val did a practice-based doctoral research 
-        (defended in July 2026) which focuses on changes in perception and representation in relation with 
-        new systems for recycling human urine in agriculture, with a focus on urine collection devices. 
+        of inhabited spaces, engagin with the banal, liminal and abject. Knowing as a situated and embodied practice is at core.
+        Val did a practice-based doctoral research (defended in July 2026) which focuses on changes in perception and representation 
+        in relation with new systems for recycling human urine in agriculture, with a focus on urine collection devices. 
         They also teach in design, art and urban planning at the university through courses, workshops and lectures.
         <br><br><a href="resume.html">
           <u>✼ More informations ✼</u>
@@ -29,11 +29,43 @@
         </p>
     </div>
 
+    <!-- Diaporama : ajoute/retire des <figure>, le script s'adapte tout seul.
+         Sans JS, la piste reste défilable (glisser / molette / clavier). -->
+    <section class="slideshow" aria-roledescription="carousel" aria-label="Images choisies">
+      <div class="slideshow__controls">
+        <span><button type="button" class="slideshow__btn" data-dir="-1" aria-label="Image précédente">←</button></span>
+        <span><button type="button" class="slideshow__btn" data-dir="1" aria-label="Image suivante">→</button></span>
+      </div>
+      <div class="slideshow__track" tabindex="0">
+        <figure class="slideshow__slide">
+          <img class="zoomable" src="images/pee-ceremony/VAL-pee-ceremony-8.jpg" data-full="images/pee-ceremony/VAL-pee-ceremony-8.jpg"
+               alt="Picture from Pee Ceremony" width="1200" height="900">
+          <figcaption>Pee Ceremony, 2026</figcaption>
+        </figure>
+        <figure class="slideshow__slide">
+          <img class="zoomable" src="images/doctoral-research/VAL-doctoral-research-0.jpg" data-full="images/doctoral-research/VAL-doctoral-research-0.jpg"
+               alt="Dry gender-neutral urinal Urocyclus" width="1200" height="900" loading="lazy">
+          <figcaption>Urocyclus, 2023</figcaption>
+        </figure>
+        <figure class="slideshow__slide">
+          <img class="zoomable" src="images/dissoudre-haillons-urine/VAL-Louise Destable (5).jpg" data-full="images/dissoudre-haillons-urine/VAL-Louise Destable (5).jpg"
+               alt="Dissoudre haillons urine 2025" width="1200" height="900" loading="lazy">
+          <figcaption>Dissoudre haillons urine, 2025 (c) Louise Destable</figcaption>
+        </figure>
+      </div>
+    </section>
+
     <ul class="project-list">
       <li>
         <a href="doctoral-research.html">
           <span class="project-list__title">Doctoral Research</span>
           <span class="project-list__year">2021-2026</span>
+        </a>
+      </li>
+      <li>
+        <a href="hold.html">
+          <span class="project-list__title">>HOLD<</span>
+          <span class="project-list__year">2026</span>
         </a>
       </li>
       <li>
@@ -105,7 +137,7 @@
       
       <p class="home__legal">
   <a href="colophon.html"><small>Colophon</small></a>
-  <br><a href="https://creativecommons.org/..."><small>Creative Commons BY-NC-ND</small></a>
+  <br><a href="https://creativecommons.org/cc-licenses/"><small>Creative Commons BY-NC-ND</small></a>
   <br><a href="useful-tools.html"><small>List of useful tools</small></a>
     </p>
   </main>
@@ -117,5 +149,11 @@
     </nav>
   </footer>
 
+  <!-- Visionneuse plein écran (clic sur une image du diaporama) -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <img id="overlay-img" src="" alt="">
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>

@@ -157,6 +157,7 @@ img { max-width: 100%; display: block; }
 
 .slideshow__track {
   display: flex;
+  align-items: flex-start;          /* chaque slide garde la hauteur de son image */
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;            /* Firefox */
@@ -171,11 +172,19 @@ img { max-width: 100%; display: block; }
   margin: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;            /* légende calée en bas de l'image */
+  justify-content: flex-start;
+  gap: 8px;
 }
 
 .slideshow__slide img {
-  width: 100%;
-  height: auto;                     /* hauteur réelle de l'image : la légende la suit de près */
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 0;
+  max-width: calc(100% - 2rem);     /* laisse la place à la légende */
+  height: auto;
   max-height: 60vh;
   object-fit: contain;
   object-position: left top;        /* aligné avec la colonne de texte */
@@ -187,15 +196,20 @@ img { max-width: 100%; display: block; }
 .slideshow__slide figcaption {
   font-size: 0.85rem;
   color: var(--mid);
-  margin-top: 6px;
+  margin: 0;
+  writing-mode: vertical-rl;        /* texte vertical */
+  transform: rotate(180deg);        /* lecture de bas en haut */
+  white-space: nowrap;
+  max-height: 60vh;
 }
 
 .slideshow__controls {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* ← à gauche, → à droite, sur toute la largeur */
+  justify-content: flex-start;      /* les deux flèches groupées à gauche */
+  gap: 4px;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 4px;               /* au plus près de l'image */
   font-size: 0.85rem;
   color: var(--mid);
 }
@@ -205,6 +219,7 @@ img { max-width: 100%; display: block; }
   background: none;
   border: 0;
   padding: 4px 6px;
+  margin-left: -6px;                /* aligne la 1re flèche sur le bord gauche de l'image */
   font: inherit;
   font-size: 1.1rem;
   color: var(--mid);
@@ -244,6 +259,12 @@ img { max-width: 100%; display: block; }
   }
 
   .slideshow__slide img { max-height: 75vh; }
+}
+
+/* Téléphone : images moins hautes pour que le diaporama ne mange pas l'écran */
+@media (max-width: 640px) {
+  .slideshow__slide img { max-height: 50vh; }
+  .slideshow__slide figcaption { max-height: 50vh; }
 }
 
 /* Sans JS : les boutons ne servent à rien, on les masque */
